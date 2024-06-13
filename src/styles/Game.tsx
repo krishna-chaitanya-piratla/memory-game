@@ -8,7 +8,7 @@ export const GameContainer = styled.div<{ rows: number; columns: number; cardSiz
   justify-content: center;
   align-items: center;
   margin: 1.25rem;
-  border: var(--border-width) solid ${({ theme }) => theme.darkMode ? 'var(--dark-mode-text-color)' : 'var(--primary-text-color)'};
+  border: var(--border-width) solid ${({ theme }) => theme.darkMode ? 'var(--dark-mode-text-color)' : 'var(--light-mode-text-color)'};
   padding: var(--padding-size);
   border-radius: var(--border-radius);
   max-height: 60vh;

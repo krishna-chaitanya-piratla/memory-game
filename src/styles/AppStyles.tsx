@@ -63,15 +63,15 @@ export const Button = styled.button`
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   background-color: inherit;
-  color: ${({ theme }) => theme.darkMode ? 'var(--dark-mode-text-color)' : 'var(--primary-text-color)'};
-  border: ${({ theme }) => theme.darkMode ? '1px solid var(--primary-bg-color)' : '1px solid var(--dark-mode-bg-color)'};
+  color: ${({ theme }) => theme.darkMode ? 'var(--dark-mode-text-color)' : 'var(--light-mode-text-color)'};
+  border: ${({ theme }) => theme.darkMode ? '1px solid var(--light-mode-bg-color)' : '1px solid var(--dark-mode-bg-color)'};
   border-radius: 0.375rem;
   cursor: pointer;
   margin-top: 1rem;
   transition: background-color 0.3s;
 
   &:hover {
-    color: ${({ theme }) => theme.darkMode ? 'var(--primary-text-color)' : 'var(--dark-mode-text-color)'};
-    background-color: ${({ theme }) => theme.darkMode ? 'var(--primary-bg-color)' : 'var(--dark-mode-bg-color)'};
+    color: ${({ theme }) => theme.darkMode ? 'var(--light-mode-text-color)' : 'var(--dark-mode-text-color)'};
+    background-color: ${({ theme }) => theme.darkMode ? 'var(--light-mode-bg-color)' : 'var(--dark-mode-bg-color)'};
   }
 `;

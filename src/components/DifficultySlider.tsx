@@ -1,5 +1,5 @@
 import React from 'react';
-import { Slider, Typography, Box } from '@mui/material';
+import { Typography } from '@mui/material';
 import { DifficultySliderContainer, CustomSlider } from '../styles/DifficultySlider';
 import { useStore } from '../store/StoreProvider';
 
