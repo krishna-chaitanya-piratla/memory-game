@@ -59,7 +59,7 @@ const App: React.FC = observer(() => {
             </>
           ) : (
             <>
-              <Game size={gameStore.difficultyValue} />
+              <Game />
               <Button onClick={handleEndGame}>End Game</Button>
             </>
           )}

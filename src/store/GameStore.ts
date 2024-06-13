@@ -60,6 +60,27 @@ class GameStore {
   isCardVisible(index: number) {
     return this.cardStates[index] || false;
   }
+
+  calculateGridDimensions(numCards: number) {
+    const sqrt = Math.sqrt(numCards);
+    const rows = Math.ceil(sqrt); // Use ceiling to ensure all cards fit
+    const cols = Math.ceil(numCards / rows); // Ensure enough columns to fit all cards
+    return { rows, cols };
+  }
+
+  calculateCardSizeInPx(rows: number, cols: number, maxContainerHeight: number, maxContainerWidth: number, gap: number) {
+    let cardSize = 150; // Initial card size in px
+
+    while ((cardSize * rows + gap * (rows - 1) > maxContainerHeight) || (cardSize * cols + gap * (cols - 1) > maxContainerWidth)) {
+      cardSize *= 0.9; // Reduce size by 10%
+    }
+
+    return cardSize;
+  }
+
+  pxToRem(px: number, rootSize: number) {
+    return px / rootSize;
+  }
 }
 
 export default GameStore;
