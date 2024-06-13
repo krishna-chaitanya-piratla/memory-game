@@ -6,10 +6,15 @@ import { AppContainer, AppHeader, MainContent } from './styles/AppStyles';
 import Head from './components/Head';
 import Toggle from './components/Toggle';
 import Game from './components/Game';
+import DifficultySlider from './components/DifficultySlider';
 import { useStore } from './store/StoreProvider';
 
 const App: React.FC = observer(() => {
-  const { appStore } = useStore();
+  const { appStore, gameStore } = useStore();
+
+  const handleSliderChange = (event: Event, newValue: number | number[]) => {
+    gameStore.setDifficulty(gameStore.difficultyValues[newValue as number]);
+  };
 
   const theme = {
     darkMode: appStore.darkMode,
@@ -25,7 +30,8 @@ const App: React.FC = observer(() => {
           <Toggle />
         </AppHeader>
         <MainContent>
-          <Game size={2} />
+          <DifficultySlider value={gameStore.difficultyIndex} onChange={handleSliderChange} />
+          <Game size={gameStore.difficultyValue} /> {/* Adjust the size based on difficulty */}
         </MainContent>
       </AppContainer>
     </ThemeProvider>

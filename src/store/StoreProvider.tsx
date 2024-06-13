@@ -1,12 +1,14 @@
 import React, { createContext, useContext } from 'react';
 import AppStore from './AppStore';
-
+import GameStore from './GameStore';
 
 class RootStore {
   appStore: AppStore;
+  gameStore: GameStore;
 
-  constructor () {
+  constructor() {
     this.appStore = new AppStore();
+    this.gameStore = new GameStore();
   }
 }
 
