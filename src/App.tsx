@@ -1,6 +1,6 @@
 import React from 'react';
 import GlobalStyle from './styles/GlobalStyle';
-import { AppContainer, AppHeader } from './styles/AppStyles';
+import { AppContainer, AppHeader, MainContent } from './styles/AppStyles';
 import { Helmet } from 'react-helmet';
 
 const App: React.FC = () => {
@@ -24,6 +24,9 @@ const App: React.FC = () => {
       <AppHeader>
         <h1>Memory Game</h1>
       </AppHeader>
+      <MainContent>
+        {/* Additional elements will go here */}
+      </MainContent>
     </AppContainer>
   );
 };
