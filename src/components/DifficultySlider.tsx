@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@mui/material';
+import { Slider, Typography, Box } from '@mui/material';
 import { DifficultySliderContainer, CustomSlider } from '../styles/DifficultySlider';
 import { useStore } from '../store/StoreProvider';
 
@@ -13,7 +13,12 @@ const difficultyMarks = [
 ];
 
 const DifficultySlider: React.FC<{ value: number; onChange: (event: Event, newValue: number | number[]) => void }> = ({ value, onChange }) => {
-  const { appStore } = useStore();
+  const { gameStore } = useStore();
+
+  const getNumberOfCards = (value: number) => {
+    const difficultyValue = gameStore.difficultyValues[value];
+    return `${difficultyValue * 2} cards`;
+  };
 
   return (
     <DifficultySliderContainer>
@@ -28,7 +33,7 @@ const DifficultySlider: React.FC<{ value: number; onChange: (event: Event, newVa
         min={0}
         max={5}
         valueLabelDisplay="auto"
-        theme={{ darkMode: appStore.darkMode }}
+        valueLabelFormat={getNumberOfCards}
       />
     </DifficultySliderContainer>
   );
