@@ -16,8 +16,6 @@ export const AppHeader = styled.header`
     justify-content: center;
     align-items: center;
     padding: 1.25rem 0;
-    background-color: inherit;
-    color: var(--primary-text-color);
     position: relative;
 
     h1 {
