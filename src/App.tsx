@@ -2,6 +2,7 @@ import React from 'react';
 import GlobalStyle from './styles/GlobalStyle';
 import { AppContainer, AppHeader, MainContent } from './styles/AppStyles';
 import Head from './components/Head';
+import Toggle from './components/Toggle';
 
 const App: React.FC = () => {
   return (
@@ -10,6 +11,7 @@ const App: React.FC = () => {
       <Head />
       <AppHeader>
         <h1>Memory Game</h1>
+        <Toggle />
       </AppHeader>
       <MainContent>
         {/* Additional elements will go here */}

@@ -6,7 +6,7 @@ export const AppContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    width: 100%;
+    width: 80%;
 `;
 
 export const AppHeader = styled.header`
@@ -14,9 +14,11 @@ export const AppHeader = styled.header`
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
     padding: 1.25rem 0;
     background-color: inherit;
     color: var(--primary-text-color);
+    position: relative;
 
     h1 {
         text-shadow: var(--header-text-shadow);
