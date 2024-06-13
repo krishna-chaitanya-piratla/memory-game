@@ -16,8 +16,11 @@ export const AppHeader = styled.header`
     justify-content: center;
     padding: 1.25rem 0;
     background-color: inherit;
-    color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: var(--primary-text-color);
+
+    h1 {
+        text-shadow: var(--header-text-shadow);
+    }
 `;
 
 export const MainContent = styled.main`

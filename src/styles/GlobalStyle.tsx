@@ -1,6 +1,15 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
+  :root {
+    --primary-bg-color: hsl(43deg 73% 44%);
+    --primary-text-color: hsl(0deg 0% 7%);
+    --dark-mode-bg-color: hsl(0deg 0% 7%);
+    --dark-mode-text-color: hsl(43deg 73% 44%);
+    --header-text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    /* Add more variables as needed */
+  }
+
   * {
     box-sizing: border-box;
     margin: 0;
@@ -15,8 +24,8 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #282c34;
-    color: white;
+    background-color: var(--primary-bg-color);
+    color: var(--primary-text-color);
     display: flex;
     flex-direction: column;
     align-items: center;
