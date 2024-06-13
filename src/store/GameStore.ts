@@ -4,6 +4,7 @@ class GameStore {
   difficulty = 6; // Default to Normal difficulty
   difficultyValues = [2, 3, 6, 10, 18, 32]; // Mapping array for difficulty levels
   cardStates: { [key: number]: boolean } = {}; // Map to store visibility state of cards
+  gameStarted = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -24,6 +25,15 @@ class GameStore {
 
   resetCardStates() {
     this.cardStates = {}; // Reset visibility states
+  }
+
+  startGame() {
+    this.gameStarted = true;
+  }
+
+  endGame() {
+    this.gameStarted = false;
+    this.resetCardStates();
   }
 
   get difficultyIndex() {

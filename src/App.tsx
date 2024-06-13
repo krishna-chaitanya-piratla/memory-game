@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyle from './styles/GlobalStyle';
-import { AppContainer, AppHeader, MainContent } from './styles/AppStyles';
+import { AppContainer, AppHeader, MainContent, Button } from './styles/AppStyles';
 import Head from './components/Head';
 import Toggle from './components/Toggle';
 import Game from './components/Game';
@@ -14,6 +14,14 @@ const App: React.FC = observer(() => {
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
     gameStore.setDifficulty(gameStore.difficultyValues[newValue as number]);
+  };
+
+  const handleStartGame = () => {
+    gameStore.startGame();
+  };
+
+  const handleEndGame = () => {
+    gameStore.endGame();
   };
 
   const theme = {
@@ -30,8 +38,17 @@ const App: React.FC = observer(() => {
           <Toggle />
         </AppHeader>
         <MainContent>
-          <DifficultySlider value={gameStore.difficultyIndex} onChange={handleSliderChange} />
-          <Game size={gameStore.difficultyValue} /> {/* Adjust the size based on difficulty */}
+          {!gameStore.gameStarted ? (
+            <>
+              <DifficultySlider value={gameStore.difficultyIndex} onChange={handleSliderChange} />
+              <Button onClick={handleStartGame}>Start Game</Button>
+            </>
+          ) : (
+            <>
+              <Game size={gameStore.difficultyValue} />
+              <Button onClick={handleEndGame}>End Game</Button>
+            </>
+          )}
         </MainContent>
       </AppContainer>
     </ThemeProvider>
