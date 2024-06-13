@@ -1,6 +1,7 @@
 import React from 'react';
-import { Slider, Typography, Box } from '@mui/material';
-import styled from 'styled-components';
+import { Typography } from '@mui/material';
+import { DifficultySliderContainer, CustomSlider } from '../styles/DifficultySlider';
+import { useStore } from '../store/StoreProvider';
 
 const difficultyMarks = [
   { value: 0, label: 'Very Easy' },
@@ -11,18 +12,15 @@ const difficultyMarks = [
   { value: 5, label: 'Is this for real?!' },
 ];
 
-const DifficultySliderContainer = styled(Box)`
-  width: 50%;
-  margin: 20px 0;
-`;
-
 const DifficultySlider: React.FC<{ value: number; onChange: (event: Event, newValue: number | number[]) => void }> = ({ value, onChange }) => {
+  const { appStore } = useStore();
+
   return (
     <DifficultySliderContainer>
       <Typography variant="h6" gutterBottom>
         Select Difficulty
       </Typography>
-      <Slider
+      <CustomSlider
         value={value}
         onChange={onChange}
         step={1}
@@ -30,6 +28,7 @@ const DifficultySlider: React.FC<{ value: number; onChange: (event: Event, newVa
         min={0}
         max={5}
         valueLabelDisplay="auto"
+        theme={{ darkMode: appStore.darkMode }}
       />
     </DifficultySliderContainer>
   );
