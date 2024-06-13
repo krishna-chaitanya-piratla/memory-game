@@ -9,8 +9,11 @@ const GlobalStyle = createGlobalStyle<{ theme: { darkMode: boolean } }>`
     --dark-mode-icon-active-color: hsl(43deg 73% 44%);
     --dark-mode-icon-inactive-color: #aaa;
     --light-mode-icon-active-color: hsl(35deg 100% 16%);
-    --header-text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-    /* Add more variables as needed */
+    --header-text-shadow: 0.0625rem 0.0625rem 0.125rem rgba(0, 0, 0, 0.8);
+    --gap-size: 1rem;
+    --padding-size: 1rem;
+    --border-width: 0.125rem;
+    --border-radius: 0.5rem;
   }
 
   * {

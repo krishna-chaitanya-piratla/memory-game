@@ -2,16 +2,16 @@ import styled from 'styled-components';
 
 export const GameContainer = styled.div<{ rows: number; columns: number; cardSize: number; theme: { darkMode: boolean } }>`
   display: grid;
-  grid-template-columns: repeat(${({ columns }) => columns}, ${({ cardSize }) => cardSize}px);
-  grid-template-rows: repeat(${({ rows }) => rows}, ${({ cardSize }) => cardSize}px);
-  gap: 16px;
+  grid-template-columns: repeat(${({ columns }) => columns}, ${({ cardSize }) => cardSize}rem);
+  grid-template-rows: repeat(${({ rows }) => rows}, ${({ cardSize }) => cardSize}rem);
+  gap: var(--gap-size);
   justify-content: center;
   align-items: center;
-  margin: 20px;
-  border: 2px solid ${({ theme }) => theme.darkMode ? 'var(--dark-mode-text-color)' : 'var(--primary-text-color)'}; /* Conditional border color */
-  padding: 16px;
-  border-radius: 8px;
-  max-height: 60vh; /* Max height 60% of viewport height */
-  max-width: 60vw; /* Max width 60% of viewport width */
-  overflow: hidden; /* Hide overflow to avoid scroll */
+  margin: 1.25rem;
+  border: var(--border-width) solid ${({ theme }) => theme.darkMode ? 'var(--dark-mode-text-color)' : 'var(--primary-text-color)'};
+  padding: var(--padding-size);
+  border-radius: var(--border-radius);
+  max-height: 60vh;
+  max-width: 80vw;
+  overflow: hidden;
 `;

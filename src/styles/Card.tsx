@@ -6,12 +6,12 @@ export const CardContainer = styled.div<{ isVisible: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border: 0.0625rem solid #ccc;
+  border-radius: 0.5rem;
   background-color: ${({ isVisible }) => (isVisible ? '#fff' : '#ccc')};
   cursor: pointer;
   user-select: none;
   font-size: 2rem;
   color: ${({ isVisible }) => (isVisible ? '#333' : 'transparent')};
-  box-shadow: ${({ isVisible }) => (isVisible ? '0 4px 8px rgba(0, 0, 0, 0.1)' : 'none')};
+  box-shadow: ${({ isVisible }) => (isVisible ? '0 0.25rem 0.5rem rgba(0, 0, 0, 0.1)' : 'none')};
 `;

@@ -9,7 +9,7 @@ export const ToggleContainer = styled.div`
   justify-content: center;
   position: absolute;
   top: 50%;
-  right: 20px;
+  right: 1.25rem;
   transform: translateY(-50%);
 `;
 
@@ -33,7 +33,7 @@ export const IconWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 8px;
+  margin: 0 0.5rem;
 `;
 
 export const StyledLightModeIcon = styled(LightModeIcon)<{ active: boolean }>`
