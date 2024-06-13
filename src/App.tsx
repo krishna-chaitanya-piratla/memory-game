@@ -16,7 +16,7 @@ const App: React.FC = observer(() => {
   useEffect(() => {
     const timer = setTimeout(() => setFadeIn(true), 500); // Ensure fadeIn is true after the fade-out completes
     return () => clearTimeout(timer); // Clean up timeout on component unmount
-  }, [gameStore.gameStarted]);
+  }, [gameStore.gameVisible]);
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
     gameStore.setDifficulty(gameStore.difficultyValues[newValue as number]);
@@ -52,7 +52,7 @@ const App: React.FC = observer(() => {
           <Toggle />
         </AppHeader>
         <MainContent fadeIn={fadeIn}>
-          {!gameStore.gameStarted ? (
+          {!gameStore.gameVisible ? (
             <>
               <DifficultySlider value={gameStore.difficultyIndex} onChange={handleSliderChange} />
               <Button onClick={handleStartGame}>Start Game</Button>
@@ -69,4 +69,4 @@ const App: React.FC = observer(() => {
   );
 });
 
-export default App;
+export default App
