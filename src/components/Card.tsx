@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { CardContainer } from '../styles/Card';
+import { CardContainer, CardInner, CardFront, CardBack } from '../styles/Card';
 import { useStore } from '../store/StoreProvider';
 
 interface CardProps {
@@ -19,8 +19,11 @@ const Card: React.FC<CardProps> = observer(({ value, index }) => {
   };
 
   return (
-    <CardContainer isVisible={isVisible} onClick={handleClick}>
-      {value}
+    <CardContainer onClick={handleClick}>
+      <CardInner isVisible={isVisible}>
+        <CardFront>{value}</CardFront>
+        <CardBack />
+      </CardInner>
     </CardContainer>
   );
 });
