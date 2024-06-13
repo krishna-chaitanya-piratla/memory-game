@@ -5,6 +5,7 @@ import GlobalStyle from './styles/GlobalStyle';
 import { AppContainer, AppHeader, MainContent } from './styles/AppStyles';
 import Head from './components/Head';
 import Toggle from './components/Toggle';
+import Game from './components/Game';
 import { useStore } from './store/StoreProvider';
 
 const App: React.FC = observer(() => {
@@ -24,7 +25,7 @@ const App: React.FC = observer(() => {
           <Toggle />
         </AppHeader>
         <MainContent>
-          {/* Additional elements will go here */}
+          <Game size={2} />
         </MainContent>
       </AppContainer>
     </ThemeProvider>
