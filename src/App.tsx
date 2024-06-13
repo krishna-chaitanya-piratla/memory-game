@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyle from './styles/GlobalStyle';
@@ -11,17 +11,31 @@ import { useStore } from './store/StoreProvider';
 
 const App: React.FC = observer(() => {
   const { appStore, gameStore } = useStore();
+  const [fadeIn, setFadeIn] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setFadeIn(true), 500); // Ensure fadeIn is true after the fade-out completes
+    return () => clearTimeout(timer); // Clean up timeout on component unmount
+  }, [gameStore.gameStarted]);
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
     gameStore.setDifficulty(gameStore.difficultyValues[newValue as number]);
   };
 
   const handleStartGame = () => {
-    gameStore.startGame();
+    setFadeIn(false);
+    setTimeout(() => {
+      gameStore.startGame();
+      setFadeIn(true);
+    }, 500); // Start the game after the fade-out completes
   };
 
   const handleEndGame = () => {
-    gameStore.endGame();
+    setFadeIn(false);
+    setTimeout(() => {
+      gameStore.endGame();
+      setFadeIn(true);
+    }, 500); // End the game after the fade-out completes
   };
 
   const theme = {
@@ -37,7 +51,7 @@ const App: React.FC = observer(() => {
           <h1>Memory Game</h1>
           <Toggle />
         </AppHeader>
-        <MainContent>
+        <MainContent fadeIn={fadeIn}>
           {!gameStore.gameStarted ? (
             <>
               <DifficultySlider value={gameStore.difficultyIndex} onChange={handleSliderChange} />

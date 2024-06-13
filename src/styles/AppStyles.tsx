@@ -1,4 +1,30 @@
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
+
+const fadeInKeyframes = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+const fadeOutKeyframes = keyframes`
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+`;
+
+const fadeInAnimation = css`
+  animation: ${fadeInKeyframes} 0.5s ease-in-out;
+`;
+
+const fadeOutAnimation = css`
+  animation: ${fadeOutKeyframes} 0.5s ease-in-out;
+`;
 
 export const AppContainer = styled.div`
   text-align: center;
@@ -23,13 +49,14 @@ export const AppHeader = styled.header`
   }
 `;
 
-export const MainContent = styled.main`
+export const MainContent = styled.main<{ fadeIn: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
   padding: 1.25rem;
+  ${({ fadeIn }) => (fadeIn ? fadeInAnimation : fadeOutAnimation)}
 `;
 
 export const Button = styled.button`
