@@ -36,7 +36,7 @@ const calculateCardSizeInPx = (rows: number, cols: number, maxContainerHeight: n
 const pxToRem = (px: number, rootSize: number) => px / rootSize;
 
 const Game: React.FC<GameProps> = ({ size }) => {
-  const { appStore } = useStore();
+  const { appStore, gameStore } = useStore();
   const cardValues = generateCardValues(size);
   const { rows, cols } = calculateGridDimensions(cardValues.length);
 
@@ -55,7 +55,7 @@ const Game: React.FC<GameProps> = ({ size }) => {
   return (
     <GameContainer rows={rows} columns={cols} cardSize={cardSize} theme={{ darkMode: appStore.darkMode }}>
       {cardValues.map((value, index) => (
-        <Card key={index} value={value} isVisible={false} />
+        <Card key={index} index={index} value={value} />
       ))}
     </GameContainer>
   );
