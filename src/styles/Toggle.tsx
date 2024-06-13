@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { Switch } from '@mui/material';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 export const ToggleContainer = styled.div`
   display: flex;
@@ -14,10 +16,10 @@ export const ToggleContainer = styled.div`
 export const StyledSwitch = styled(Switch)`
   /* Add custom styles here */
   .MuiSwitch-switchBase.Mui-checked {
-    color: #4caf50; /* Checked color */
+    color: var(--dark-mode-icon-active-color); /* Checked color */
   }
   .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
-    background-color: #4caf50; /* Checked background color */
+    background-color: hsl(43deg 73% 44%); /* Checked background color */
   }
   .MuiSwitch-switchBase {
     color: #ccc; /* Unchecked color */
@@ -32,4 +34,12 @@ export const IconWrapper = styled.div`
   align-items: center;
   justify-content: center;
   margin: 0 8px;
+`;
+
+export const StyledLightModeIcon = styled(LightModeIcon)<{ active: boolean }>`
+  color: ${({ active }) => (active ? 'var(--light-mode-icon-active-color)' : 'var(--dark-mode-icon-inactive-color)')};
+`;
+
+export const StyledDarkModeIcon = styled(DarkModeIcon)<{ active: boolean }>`
+  color: ${({ active }) => (active ? 'var(--dark-mode-icon-active-color)' : 'var(--dark-mode-icon-inactive-color)')};
 `;

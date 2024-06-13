@@ -6,6 +6,9 @@ const GlobalStyle = createGlobalStyle<{ theme: { darkMode: boolean } }>`
     --primary-text-color: hsl(0deg 0% 7%);
     --dark-mode-bg-color: hsl(0deg 0% 7%);
     --dark-mode-text-color: hsl(43deg 73% 44%);
+    --dark-mode-icon-active-color: hsl(43deg 73% 44%);
+    --dark-mode-icon-inactive-color: #aaa;
+    --light-mode-icon-active-color: hsl(35deg 100% 16%);
     --header-text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
     /* Add more variables as needed */
   }

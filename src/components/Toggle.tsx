@@ -1,8 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { ToggleContainer, StyledSwitch, IconWrapper } from '../styles/Toggle';
-import LightModeIcon from '@mui/icons-material/LightMode';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
+import { ToggleContainer, StyledSwitch, IconWrapper, StyledLightModeIcon, StyledDarkModeIcon } from '../styles/Toggle';
 import { useStore } from '../store/StoreProvider';
 
 const Toggle: React.FC = observer(() => {
@@ -15,11 +13,11 @@ const Toggle: React.FC = observer(() => {
   return (
     <ToggleContainer>
       <IconWrapper>
-        <LightModeIcon />
+        <StyledLightModeIcon active={!appStore.darkMode} />
       </IconWrapper>
       <StyledSwitch checked={appStore.darkMode} onChange={handleChange} />
       <IconWrapper>
-        <DarkModeIcon />
+        <StyledDarkModeIcon active={appStore.darkMode} />
       </IconWrapper>
     </ToggleContainer>
   );
