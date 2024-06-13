@@ -7,6 +7,10 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
+  html {
+    font-size: 16px;
+  }
+
   body {
     font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;

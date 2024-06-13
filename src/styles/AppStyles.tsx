@@ -14,8 +14,8 @@ export const AppHeader = styled.header`
     width: 100%;
     display: flex;
     justify-content: center;
-    padding: 20px 0;
-    background-color: #282c34;
+    padding: 1.25rem 0;
+    background-color: inherit;
     color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
@@ -26,5 +26,5 @@ export const MainContent = styled.main`
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding: 20px;
+    padding: 1.25rem;
 `;
