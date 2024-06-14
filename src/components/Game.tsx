@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { observer } from 'mobx-react-lite';
 import { GameContainer } from '../styles/Game';
 import Card from './Card';
 import { useStore } from '../store/StoreProvider';
 
-const Game: React.FC = () => {
+const Game: React.FC = observer(() => {
   const { appStore, gameStore } = useStore();
   const { rows, cols } = gameStore.calculateGridDimensions(gameStore.cardValues.length);
 
@@ -20,12 +21,15 @@ const Game: React.FC = () => {
   }, [rows, cols, gameStore]);
 
   return (
-    <GameContainer rows={rows} columns={cols} cardSize={cardSize} theme={{ darkMode: appStore.darkMode }}>
-      {gameStore.cardValues.map((value, index) => (
-        <Card key={index} index={index} value={value} />
-      ))}
-    </GameContainer>
+    <div>
+      <h2>Turns: {gameStore.turns}</h2>
+      <GameContainer rows={rows} columns={cols} cardSize={cardSize} theme={{ darkMode: appStore.darkMode }}>
+        {gameStore.cardValues.map((value, index) => (
+          <Card key={index} index={index} value={value} />
+        ))}
+      </GameContainer>
+    </div>
   );
-};
+});
 
 export default Game;

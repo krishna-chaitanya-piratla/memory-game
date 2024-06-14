@@ -8,6 +8,8 @@ class GameStore {
   gameStarted = false;
   gameVisible = false;
   selectedOption = 'numbers'; // Default selected option
+  turns = 0; // Count of turns
+  flippedCards: number[] = []; // Store indices of currently flipped cards
 
   // Lists of values for the game
   static emoticons_list = [
@@ -36,7 +38,25 @@ class GameStore {
   }
 
   revealCard(index: number) {
-    this.cardStates[index] = true;
+    if (this.flippedCards.length < 2 && !this.cardStates[index]) {
+      this.cardStates[index] = true;
+      this.flippedCards.push(index);
+
+      if (this.flippedCards.length === 2) {
+        const [firstIndex, secondIndex] = this.flippedCards;
+        if (this.cardValues[firstIndex] !== this.cardValues[secondIndex]) {
+          setTimeout(() => {
+            this.closeCard(firstIndex);
+            this.closeCard(secondIndex);
+            this.flippedCards = [];
+            this.turns++;
+          }, 1000); // Add a delay before flipping back
+        } else {
+          this.flippedCards = [];
+          this.turns++;
+        }
+      }
+    }
   }
 
   closeCard(index: number) {
@@ -45,6 +65,8 @@ class GameStore {
 
   resetCardStates() {
     this.cardStates = {}; // Reset visibility states
+    this.flippedCards = [];
+    this.turns = 0; // Reset turns
   }
 
   shuffleArray(array: string[]): string[] {

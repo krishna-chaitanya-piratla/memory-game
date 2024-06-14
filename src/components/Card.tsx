@@ -13,9 +13,7 @@ const Card: React.FC<CardProps> = observer(({ value, index }) => {
   const isVisible = gameStore.isCardVisible(index);
 
   const handleClick = () => {
-    if (!isVisible) {
-      gameStore.revealCard(index);
-    }
+    gameStore.revealCard(index);
   };
 
   return (
