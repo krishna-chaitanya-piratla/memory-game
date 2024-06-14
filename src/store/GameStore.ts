@@ -7,7 +7,20 @@ class GameStore {
   cardValues: string[] = []; // Store card values
   gameStarted = false;
   gameVisible = false;
-  selectedOption = 'numbers'; // Default to Numbers
+  selectedOption = 'numbers'; // Default selected option
+
+  // Lists of values for the game
+  static emoticons_list = [
+    '😀', '😢', '🚀', '👍', '👎', '💥', '🔥', '🎉', '❤️', '💔', 
+    '🌟', '⭐️', '⚡️', '💧', '🍎', '🍌', '🍒', '🎈', '🎁', '🎨',
+    '🎵', '🎤', '🎬', '🏆', '🏀', '⚽️', '🚗', '✈️', '🏡', '⌛️',
+    '📚', '💡'
+  ];
+  static numbers_list = Array.from({ length: 100 }, (_, i) => i.toString());
+  static characters_list = [
+    ..."abcdefghijklmnopqrstuvwxyz".split(''), 
+    ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('')
+  ];
 
   constructor() {
     makeAutoObservable(this);
@@ -18,8 +31,8 @@ class GameStore {
     this.resetCardStates(); // Reset card states when difficulty changes
   }
 
-  setSelectedOption(option: string) {
-    this.selectedOption = option;
+  setSelectedOption(value: string) {
+    this.selectedOption = value;
   }
 
   revealCard(index: number) {
@@ -35,12 +48,24 @@ class GameStore {
   }
 
   generateCardValues() {
-    const values = [];
-    for (let i = 0; i < this.difficulty; i++) {
-      const value = String.fromCharCode(65 + i); // Generate A, B, C, etc.
-      values.push(value, value);
+    let values = [];
+    const size = this.difficulty * 2; // Number of cards to generate
+
+    switch (this.selectedOption) {
+      case 'emoticons':
+        values = GameStore.emoticons_list.slice(0, size / 2);
+        break;
+      case 'numbers':
+        values = GameStore.numbers_list.slice(0, size / 2);
+        break;
+      case 'characters':
+        values = GameStore.characters_list.slice(0, size / 2);
+        break;
+      default:
+        values = GameStore.numbers_list.slice(0, size / 2);
     }
-    this.cardValues = values.sort(() => Math.random() - 0.5); // Shuffle the array
+
+    this.cardValues = [...values, ...values].sort(() => Math.random() - 0.5); // Duplicate and shuffle the array
   }
 
   startGame() {
