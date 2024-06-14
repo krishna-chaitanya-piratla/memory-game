@@ -7,6 +7,7 @@ export const CardContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0.5rem; /* Added padding */
 `;
 
 export const CardInner = styled.div<{ isVisible: boolean }>`
