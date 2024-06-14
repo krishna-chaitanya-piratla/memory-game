@@ -16,9 +16,9 @@ const App: React.FC = observer(() => {
   const [fadeIn, setFadeIn] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setFadeIn(true), 500); // Ensure fadeIn is true after the fade-out completes
+    const timer = setTimeout(() => setFadeIn(true), 1000); // Ensure fadeIn is true after the fade-out completes
     return () => clearTimeout(timer); // Clean up timeout on component unmount
-  }, [gameStore.gameVisible]);
+  }, [gameStore.gameVisible, gameStore.resultsVisible]);
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
     gameStore.setDifficulty(gameStore.difficultyValues[newValue as number]);
@@ -33,15 +33,23 @@ const App: React.FC = observer(() => {
     setTimeout(() => {
       gameStore.startGame();
       setFadeIn(true);
-    }, 500); // Start the game after the fade-out completes
+    }, 1000); // Start the game after the fade-out completes
   };
 
   const handleEndGame = () => {
     setFadeIn(false);
     setTimeout(() => {
-      gameStore.endGame();
+      gameStore.endGame(false); // Pass false to indicate game ended without revealing all pairs
       setFadeIn(true);
-    }, 500); // End the game after the fade-out completes
+    }, 1000); // End the game after the fade-out completes
+  };
+
+  const handleHomeClick = () => {
+    setFadeIn(false);
+    setTimeout(() => {
+      gameStore.resultsVisible = false;
+      setFadeIn(true);
+    }, 1000); // Navigate to home after the fade-out completes
   };
 
   const theme = {
@@ -58,7 +66,7 @@ const App: React.FC = observer(() => {
           <Toggle />
         </AppHeader>
         <MainContent fadeIn={fadeIn}>
-          {!gameStore.gameStarted ? (
+          {!gameStore.gameVisible && !gameStore.resultsVisible ? (
             <>
               <DifficultySlider value={gameStore.difficultyIndex} onChange={handleSliderChange} />
               <RadioOptions selectedOption={gameStore.selectedOption} onChange={handleOptionChange} />
@@ -70,7 +78,10 @@ const App: React.FC = observer(() => {
               <Button onClick={handleEndGame}>End Game</Button>
             </>
           ) : (
-            <Results />
+            <>
+              <Results />
+              <Button onClick={handleHomeClick}>Home</Button>
+            </>
           )}
         </MainContent>
       </AppContainer>

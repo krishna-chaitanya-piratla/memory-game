@@ -14,6 +14,12 @@ export const ResultsTable = styled.table`
   margin-bottom: 1rem;
 `;
 
+export const ResultsHeader = styled.th`
+  padding: 10px;
+  font-size: 1.25rem;
+  color: ${({ theme }) => theme.darkMode ? 'var(--dark-mode-text-color)' : 'var(--light-mode-text-color)'};
+`;
+
 export const ResultsRow = styled.tr`
   border-bottom: 1px solid ${({ theme }) => theme.darkMode ? 'var(--dark-mode-text-color)' : 'var(--light-mode-text-color)'};
 `;

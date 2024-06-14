@@ -8,6 +8,7 @@ class GameStore {
   cardValues: string[] = []; // Store card values
   gameStarted = false;
   gameVisible = false;
+  resultsVisible = false; // New state to handle results view visibility
   selectedOption = 'numbers'; // Default selected option
   turns = 0; // Count of turns
   flippedCards: number[] = []; // Store indices of currently flipped cards
@@ -61,6 +62,8 @@ class GameStore {
           // Check if all cards are revealed
           if (Object.values(this.cardStates).every(state => state === true)) {
             this.stopTimer();
+            this.updateResults(true); // Game completed successfully
+            setTimeout(() => this.showResults(), 500); // Delay to allow fade-out effect
           }
         }
       }
@@ -111,24 +114,14 @@ class GameStore {
     this.resetCardStates();
     this.gameStarted = true;
     this.gameVisible = true;
+    this.resultsVisible = false; // Hide results view when starting a new game
     this.startTimer();
   }
 
-  endGame() {
-    this.gameVisible = false;
+  endGame(success: boolean) {
     this.stopTimer();
-    const status = Object.values(this.cardStates).every(state => state === true);
-    const newResult = {
-      startTime: Date.now(),
-      turns: this.turns,
-      time: this.formatTime(this.timer),
-      difficulty: this.difficultyLabels[this.difficultyIndex],
-      status: status
-    };
-    if (this.results.length >= 5) {
-      this.results.shift(); // Remove the oldest result
-    }
-    this.results.push(newResult);
+    this.updateResults(success); // Pass the game status
+    setTimeout(() => this.showResults(), 500); // Delay to allow fade-out effect
   }
 
   startTimer() {
@@ -146,6 +139,26 @@ class GameStore {
       clearInterval(this.timerInterval);
       this.timerInterval = null;
     }
+  }
+
+  updateResults(success: boolean) {
+    const result = {
+      startTime: Date.now(),
+      turns: this.turns,
+      time: this.formatTime(this.timer),
+      difficulty: this.difficultyLabels[this.difficultyValues.indexOf(this.difficulty)],
+      status: success
+    };
+
+    this.results.push(result);
+    if (this.results.length > 5) {
+      this.results.shift(); // Remove the oldest entry if more than 5 results
+    }
+  }
+
+  showResults() {
+    this.gameVisible = false;
+    this.resultsVisible = true;
   }
 
   get difficultyIndex() {

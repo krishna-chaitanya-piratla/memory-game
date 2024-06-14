@@ -1,47 +1,41 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../store/StoreProvider';
-import { ResultsContainer, ResultsTable, ResultsRow, ResultsCell, Button } from '../styles/Results';
+import { ResultsTable, ResultsRow, ResultsHeader, ResultsCell } from '../styles/Results';
 
 const Results: React.FC = observer(() => {
   const { gameStore } = useStore();
 
-  const getTimeAgo = (timestamp: number) => {
-    const secondsAgo = Math.floor((Date.now() - timestamp) / 1000);
-    const minutesAgo = Math.floor(secondsAgo / 60);
-    return `${minutesAgo} minutes ago`;
-  };
-
-  const handleHomeClick = () => {
-    gameStore.gameStarted = false;
+  const formatTimeAgo = (startTime: number) => {
+    const now = Date.now();
+    const diff = now - startTime;
+    const minutes = Math.floor(diff / 60000);
+    return `${minutes} minute(s) ago`;
   };
 
   return (
-    <ResultsContainer>
-      <ResultsTable>
-        <thead>
-          <ResultsRow>
-            <ResultsCell>Time Ago</ResultsCell>
-            <ResultsCell>Turns</ResultsCell>
-            <ResultsCell>Duration</ResultsCell>
-            <ResultsCell>Difficulty</ResultsCell>
-            <ResultsCell>Status</ResultsCell>
+    <ResultsTable>
+      <thead>
+        <ResultsRow>
+          <ResultsHeader>Time Ago</ResultsHeader>
+          <ResultsHeader>Turns</ResultsHeader>
+          <ResultsHeader>Time</ResultsHeader>
+          <ResultsHeader>Difficulty</ResultsHeader>
+          <ResultsHeader>Status</ResultsHeader>
+        </ResultsRow>
+      </thead>
+      <tbody>
+        {gameStore.results.slice().reverse().map((result, index) => (
+          <ResultsRow key={index}>
+            <ResultsCell>{formatTimeAgo(result.startTime)}</ResultsCell>
+            <ResultsCell>{result.turns}</ResultsCell>
+            <ResultsCell>{result.time}</ResultsCell>
+            <ResultsCell>{result.difficulty}</ResultsCell>
+            <ResultsCell>{result.status ? '✔️' : '❌'}</ResultsCell>
           </ResultsRow>
-        </thead>
-        <tbody>
-          {[...gameStore.results].reverse().map((result, index) => (
-            <ResultsRow key={index}>
-              <ResultsCell>{getTimeAgo(result.startTime)}</ResultsCell>
-              <ResultsCell>{result.turns}</ResultsCell>
-              <ResultsCell>{result.time}</ResultsCell>
-              <ResultsCell>{result.difficulty}</ResultsCell>
-              <ResultsCell>{result.status ? '✅' : '❌'}</ResultsCell>
-            </ResultsRow>
-          ))}
-        </tbody>
-      </ResultsTable>
-      <Button onClick={handleHomeClick}>Home</Button>
-    </ResultsContainer>
+        ))}
+      </tbody>
+    </ResultsTable>
   );
 });
 
