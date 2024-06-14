@@ -8,6 +8,7 @@ import Toggle from './components/Toggle';
 import Game from './components/Game';
 import DifficultySlider from './components/DifficultySlider';
 import RadioOptions from './components/RadioOptions';
+import Results from './components/Results';
 import { useStore } from './store/StoreProvider';
 
 const App: React.FC = observer(() => {
@@ -57,17 +58,19 @@ const App: React.FC = observer(() => {
           <Toggle />
         </AppHeader>
         <MainContent fadeIn={fadeIn}>
-          {!gameStore.gameVisible ? (
+          {!gameStore.gameStarted ? (
             <>
               <DifficultySlider value={gameStore.difficultyIndex} onChange={handleSliderChange} />
               <RadioOptions selectedOption={gameStore.selectedOption} onChange={handleOptionChange} />
               <Button onClick={handleStartGame}>Start Game</Button>
             </>
-          ) : (
+          ) : gameStore.gameVisible ? (
             <>
               <Game />
               <Button onClick={handleEndGame}>End Game</Button>
             </>
+          ) : (
+            <Results />
           )}
         </MainContent>
       </AppContainer>

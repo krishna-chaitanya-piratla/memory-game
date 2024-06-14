@@ -3,6 +3,7 @@ import { makeAutoObservable } from 'mobx';
 class GameStore {
   difficulty = 6; // Default to Normal difficulty
   difficultyValues = [2, 3, 6, 10, 18, 32]; // Mapping array for difficulty levels
+  difficultyLabels = ['Very Easy', 'Easy', 'Normal', 'Hard', 'Ultra Hard', 'Is this for real?!']; // Difficulty labels
   cardStates: { [key: number]: boolean } = {}; // Map to store visibility state of cards
   cardValues: string[] = []; // Store card values
   gameStarted = false;
@@ -12,10 +13,11 @@ class GameStore {
   flippedCards: number[] = []; // Store indices of currently flipped cards
   timer: number = 0; // Timer in seconds
   timerInterval: NodeJS.Timeout | null = null; // Timer interval
+  results: { startTime: number; turns: number; time: string; difficulty: string; status: boolean }[] = []; // Store game results
 
   // Lists of values for the game
   static emoticons_list = [
-    '😀', '😢', '🚀', '👍', '👎', '💥', '🔥', '🎉', '❤️', '💔', 
+    '😀', '😢', '🚀', '👍', '👎', '💥', '🔥', '🎉', '❤️', '💔',
     '🌟', '⭐️', '⚡️', '💧', '🍎', '🍌', '🍒', '🎈', '🎁', '🎨',
     '🎵', '🎤', '🎬', '🏆', '🏀', '⚽️', '🚗', '✈️', '🏡', '⌛️',
     '📚', '💡'
@@ -57,7 +59,7 @@ class GameStore {
           this.flippedCards = [];
           this.turns++;
           // Check if all cards are revealed
-          if (Object.values(this.cardStates).every(state => state===true)) {
+          if (Object.values(this.cardStates).every(state => state === true)) {
             this.stopTimer();
           }
         }
@@ -115,6 +117,18 @@ class GameStore {
   endGame() {
     this.gameVisible = false;
     this.stopTimer();
+    const status = Object.values(this.cardStates).every(state => state === true);
+    const newResult = {
+      startTime: Date.now(),
+      turns: this.turns,
+      time: this.formatTime(this.timer),
+      difficulty: this.difficultyLabels[this.difficultyIndex],
+      status: status
+    };
+    if (this.results.length >= 5) {
+      this.results.shift(); // Remove the oldest result
+    }
+    this.results.push(newResult);
   }
 
   startTimer() {
@@ -175,4 +189,3 @@ class GameStore {
 }
 
 export default GameStore;
-
