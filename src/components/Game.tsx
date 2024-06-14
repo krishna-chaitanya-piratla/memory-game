@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { GameContainer } from '../styles/Game';
+import { GameContainer, GameInfoContainer, InfoItem } from '../styles/Game';
 import Card from './Card';
 import { useStore } from '../store/StoreProvider';
 
@@ -20,9 +20,18 @@ const Game: React.FC = observer(() => {
     setCardSize(calculatedSizeInRem);
   }, [rows, cols, gameStore]);
 
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+  };
+
   return (
     <div>
-      <h2>Turns: {gameStore.turns}</h2>
+      <GameInfoContainer>
+        <InfoItem>Turns: {gameStore.turns}</InfoItem>
+        <InfoItem>Time: {formatTime(gameStore.timer)}</InfoItem>
+      </GameInfoContainer>
       <GameContainer rows={rows} columns={cols} cardSize={cardSize} theme={{ darkMode: appStore.darkMode }}>
         {gameStore.cardValues.map((value, index) => (
           <Card key={index} index={index} value={value} />

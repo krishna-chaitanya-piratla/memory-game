@@ -15,3 +15,17 @@ export const GameContainer = styled.div<{ rows: number; columns: number; cardSiz
   max-width: 80vw;
   overflow: hidden;
 `;
+
+export const GameInfoContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+`;
+
+export const InfoItem = styled.div`
+  font-size: 1.5rem;
+  color: ${({ theme }) => theme.darkMode ? 'var(--dark-mode-text-color)' : 'var(--light-mode-text-color)'};
+  margin-left: 2rem;
+  margin-right: 2rem;
+`;

@@ -10,6 +10,8 @@ class GameStore {
   selectedOption = 'numbers'; // Default selected option
   turns = 0; // Count of turns
   flippedCards: number[] = []; // Store indices of currently flipped cards
+  timer: number = 0; // Timer in seconds
+  timerInterval: NodeJS.Timeout | null = null; // Timer interval
 
   // Lists of values for the game
   static emoticons_list = [
@@ -54,6 +56,10 @@ class GameStore {
         } else {
           this.flippedCards = [];
           this.turns++;
+          // Check if all cards are revealed
+          if (Object.values(this.cardStates).every(state => state===true)) {
+            this.stopTimer();
+          }
         }
       }
     }
@@ -103,10 +109,29 @@ class GameStore {
     this.resetCardStates();
     this.gameStarted = true;
     this.gameVisible = true;
+    this.startTimer();
   }
 
   endGame() {
     this.gameVisible = false;
+    this.stopTimer();
+  }
+
+  startTimer() {
+    this.timer = 0;
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+    }
+    this.timerInterval = setInterval(() => {
+      this.timer++;
+    }, 1000);
+  }
+
+  stopTimer() {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+      this.timerInterval = null;
+    }
   }
 
   get difficultyIndex() {
@@ -141,6 +166,13 @@ class GameStore {
   pxToRem(px: number, rootSize: number) {
     return px / rootSize;
   }
+
+  formatTime(seconds: number) {
+    const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const secs = (seconds % 60).toString().padStart(2, '0');
+    return `${mins}:${secs}`;
+  }
 }
 
 export default GameStore;
+
