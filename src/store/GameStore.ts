@@ -7,6 +7,7 @@ class GameStore {
   cardValues: string[] = []; // Store card values
   gameStarted = false;
   gameVisible = false;
+  selectedOption = 'numbers'; // Default to Numbers
 
   constructor() {
     makeAutoObservable(this);
@@ -15,6 +16,10 @@ class GameStore {
   setDifficulty(value: number) {
     this.difficulty = value;
     this.resetCardStates(); // Reset card states when difficulty changes
+  }
+
+  setSelectedOption(option: string) {
+    this.selectedOption = option;
   }
 
   revealCard(index: number) {

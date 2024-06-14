@@ -7,6 +7,7 @@ import Head from './components/Head';
 import Toggle from './components/Toggle';
 import Game from './components/Game';
 import DifficultySlider from './components/DifficultySlider';
+import RadioOptions from './components/RadioOptions';
 import { useStore } from './store/StoreProvider';
 
 const App: React.FC = observer(() => {
@@ -20,6 +21,10 @@ const App: React.FC = observer(() => {
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
     gameStore.setDifficulty(gameStore.difficultyValues[newValue as number]);
+  };
+
+  const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    gameStore.setSelectedOption((event.target as HTMLInputElement).value);
   };
 
   const handleStartGame = () => {
@@ -55,6 +60,7 @@ const App: React.FC = observer(() => {
           {!gameStore.gameVisible ? (
             <>
               <DifficultySlider value={gameStore.difficultyIndex} onChange={handleSliderChange} />
+              <RadioOptions selectedOption={gameStore.selectedOption} onChange={handleOptionChange} />
               <Button onClick={handleStartGame}>Start Game</Button>
             </>
           ) : (
@@ -69,4 +75,4 @@ const App: React.FC = observer(() => {
   );
 });
 
-export default App
+export default App;
