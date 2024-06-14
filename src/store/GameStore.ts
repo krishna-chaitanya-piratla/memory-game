@@ -47,22 +47,30 @@ class GameStore {
     this.cardStates = {}; // Reset visibility states
   }
 
+  shuffleArray(array: string[]): string[] {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
   generateCardValues() {
-    let values = [];
+    let values: string[] = [];
     const size = this.difficulty * 2; // Number of cards to generate
 
     switch (this.selectedOption) {
       case 'emoticons':
-        values = GameStore.emoticons_list.slice(0, size / 2);
+        values = this.shuffleArray([...GameStore.emoticons_list]).slice(0, size / 2);
         break;
       case 'numbers':
-        values = GameStore.numbers_list.slice(0, size / 2);
+        values = this.shuffleArray([...GameStore.numbers_list]).slice(0, size / 2);
         break;
       case 'characters':
-        values = GameStore.characters_list.slice(0, size / 2);
+        values = this.shuffleArray([...GameStore.characters_list]).slice(0, size / 2);
         break;
       default:
-        values = GameStore.numbers_list.slice(0, size / 2);
+        values = this.shuffleArray([...GameStore.numbers_list]).slice(0, size / 2);
     }
 
     this.cardValues = [...values, ...values].sort(() => Math.random() - 0.5); // Duplicate and shuffle the array
