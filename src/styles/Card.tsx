@@ -30,7 +30,6 @@ export const CardFace = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
 `;
 
 export const CardFront = styled(CardFace)`
@@ -43,4 +42,19 @@ export const CardBack = styled(CardFace)`
   background-color: #ccc;
   color: transparent;
   transform: rotateY(180deg);
+`;
+
+export const CardValue = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  word-wrap: break-word;
+  text-align: center;
+  line-height: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 2rem; /* Initial font size */
 `;
