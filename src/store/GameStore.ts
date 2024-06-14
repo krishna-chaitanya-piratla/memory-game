@@ -7,8 +7,7 @@ class GameStore {
   cardStates: { [key: number]: boolean } = {}; // Map to store visibility state of cards
   cardValues: string[] = []; // Store card values
   gameStarted = false;
-  gameVisible = false;
-  resultsVisible = false; // New state to handle results view visibility
+  view: 'home' | 'game' | 'results' = 'home'; // Current view state
   selectedOption = 'numbers'; // Default selected option
   turns = 0; // Count of turns
   flippedCards: number[] = []; // Store indices of currently flipped cards
@@ -113,15 +112,14 @@ class GameStore {
     this.generateCardValues();
     this.resetCardStates();
     this.gameStarted = true;
-    this.gameVisible = true;
-    this.resultsVisible = false; // Hide results view when starting a new game
+    this.view = 'game'; // Show game view
     this.startTimer();
   }
 
   endGame(success: boolean) {
     this.stopTimer();
     this.updateResults(success); // Pass the game status
-    setTimeout(() => this.showResults(), 500); // Delay to allow fade-out effect
+    this.view = 'results'; // Immediately show results view
   }
 
   startTimer() {
@@ -150,15 +148,18 @@ class GameStore {
       status: success
     };
 
-    this.results.push(result);
+    this.results.unshift(result);
     if (this.results.length > 5) {
-      this.results.shift(); // Remove the oldest entry if more than 5 results
+      this.results.pop(); // Remove the oldest entry if more than 5 results
     }
   }
 
   showResults() {
-    this.gameVisible = false;
-    this.resultsVisible = true;
+    this.view = 'results';
+  }
+
+  showHome() {
+    this.view = 'home';
   }
 
   get difficultyIndex() {

@@ -14,11 +14,17 @@ import { useStore } from './store/StoreProvider';
 const App: React.FC = observer(() => {
   const { appStore, gameStore } = useStore();
   const [fadeIn, setFadeIn] = useState(true);
+  const [transitioning, setTransitioning] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setFadeIn(true), 1000); // Ensure fadeIn is true after the fade-out completes
-    return () => clearTimeout(timer); // Clean up timeout on component unmount
-  }, [gameStore.gameVisible, gameStore.resultsVisible]);
+    if (transitioning) {
+      const timer = setTimeout(() => {
+        setFadeIn(true);
+        setTransitioning(false);
+      }, 500); // Ensure fadeIn is true after the fade-out completes
+      return () => clearTimeout(timer); // Clean up timeout on component unmount
+    }
+  }, [transitioning]);
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
     gameStore.setDifficulty(gameStore.difficultyValues[newValue as number]);
@@ -32,24 +38,24 @@ const App: React.FC = observer(() => {
     setFadeIn(false);
     setTimeout(() => {
       gameStore.startGame();
-      setFadeIn(true);
-    }, 1000); // Start the game after the fade-out completes
+      setTransitioning(true);
+    }, 500); // Start the game after the fade-out completes
   };
 
   const handleEndGame = () => {
     setFadeIn(false);
     setTimeout(() => {
       gameStore.endGame(false); // Pass false to indicate game ended without revealing all pairs
-      setFadeIn(true);
-    }, 1000); // End the game after the fade-out completes
+      setTransitioning(true);
+    }, 500); // End the game after the fade-out completes
   };
 
   const handleHomeClick = () => {
     setFadeIn(false);
     setTimeout(() => {
-      gameStore.resultsVisible = false;
-      setFadeIn(true);
-    }, 1000); // Navigate to home after the fade-out completes
+      gameStore.showHome();
+      setTransitioning(true);
+    }, 500); // Navigate to home after the fade-out completes
   };
 
   const theme = {
@@ -66,18 +72,20 @@ const App: React.FC = observer(() => {
           <Toggle />
         </AppHeader>
         <MainContent fadeIn={fadeIn}>
-          {!gameStore.gameVisible && !gameStore.resultsVisible ? (
+          {!transitioning && gameStore.view === 'home' && (
             <>
               <DifficultySlider value={gameStore.difficultyIndex} onChange={handleSliderChange} />
               <RadioOptions selectedOption={gameStore.selectedOption} onChange={handleOptionChange} />
               <Button onClick={handleStartGame}>Start Game</Button>
             </>
-          ) : gameStore.gameVisible ? (
+          )}
+          {!transitioning && gameStore.view === 'game' && (
             <>
               <Game />
               <Button onClick={handleEndGame}>End Game</Button>
             </>
-          ) : (
+          )}
+          {!transitioning && gameStore.view === 'results' && (
             <>
               <Results />
               <Button onClick={handleHomeClick}>Home</Button>
