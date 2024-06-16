@@ -25,7 +25,7 @@ const Results: React.FC = observer(() => {
         </ResultsRow>
       </thead>
       <tbody>
-        {gameStore.results.slice().reverse().map((result, index) => (
+        {gameStore.results.map((result, index) => (
           <ResultsRow key={index}>
             <ResultsCell>{formatTimeAgo(result.startTime)}</ResultsCell>
             <ResultsCell>{result.turns}</ResultsCell>

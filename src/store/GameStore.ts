@@ -147,8 +147,8 @@ class GameStore {
       difficulty: this.difficultyLabels[this.difficultyValues.indexOf(this.difficulty)],
       status: success
     };
-
-    this.results.unshift(result);
+  
+    this.results.unshift(result); // Latest result at the beginning
     if (this.results.length > 5) {
       this.results.pop(); // Remove the oldest entry if more than 5 results
     }
