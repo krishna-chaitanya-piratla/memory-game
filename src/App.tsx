@@ -13,18 +13,22 @@ import { useStore } from './store/StoreProvider';
 
 const App: React.FC = observer(() => {
   const { appStore, gameStore } = useStore();
-  const [fadeIn, setFadeIn] = useState(true);
-  const [transitioning, setTransitioning] = useState(false);
+  const [view, setView] = useState<'home' | 'game' | 'results'>(gameStore.view);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const handleTransition = (newView: 'home' | 'game' | 'results') => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setView(newView);
+      setIsTransitioning(false);
+    }, 500); // Duration of the fade-out animation
+  };
 
   useEffect(() => {
-    if (transitioning) {
-      const timer = setTimeout(() => {
-        setFadeIn(true);
-        setTransitioning(false);
-      }, 500); // Ensure fadeIn is true after the fade-out completes
-      return () => clearTimeout(timer); // Clean up timeout on component unmount
+    if (gameStore.view !== view && !isTransitioning) {
+      handleTransition(gameStore.view);
     }
-  }, [transitioning]);
+  }, [gameStore.view]);
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
     gameStore.setDifficulty(gameStore.difficultyValues[newValue as number]);
@@ -35,26 +39,25 @@ const App: React.FC = observer(() => {
   };
 
   const handleStartGame = () => {
-    setFadeIn(false);
+    handleTransition('game');
     setTimeout(() => {
       gameStore.startGame();
-      setTransitioning(true);
     }, 500); // Start the game after the fade-out completes
   };
 
   const handleEndGame = () => {
-    setFadeIn(false);
+    setIsTransitioning(true);
     setTimeout(() => {
       gameStore.endGame(false); // Pass false to indicate game ended without revealing all pairs
-      setTransitioning(true);
+      setView('results');
+      setIsTransitioning(false);
     }, 500); // End the game after the fade-out completes
   };
 
   const handleHomeClick = () => {
-    setFadeIn(false);
+    handleTransition('home');
     setTimeout(() => {
       gameStore.showHome();
-      setTransitioning(true);
     }, 500); // Navigate to home after the fade-out completes
   };
 
@@ -71,21 +74,21 @@ const App: React.FC = observer(() => {
           <h1>Memory Game</h1>
           <Toggle />
         </AppHeader>
-        <MainContent fadeIn={fadeIn}>
-          {!transitioning && gameStore.view === 'home' && (
+        <MainContent fadeIn={!isTransitioning}>
+          {view === 'home' && (
             <>
               <DifficultySlider value={gameStore.difficultyIndex} onChange={handleSliderChange} />
               <RadioOptions selectedOption={gameStore.selectedOption} onChange={handleOptionChange} />
               <Button onClick={handleStartGame}>Start Game</Button>
             </>
           )}
-          {!transitioning && gameStore.view === 'game' && (
+          {view === 'game' && (
             <>
               <Game />
               <Button onClick={handleEndGame}>End Game</Button>
             </>
           )}
-          {!transitioning && gameStore.view === 'results' && (
+          {view === 'results' && (
             <>
               <Results />
               <Button onClick={handleHomeClick}>Home</Button>

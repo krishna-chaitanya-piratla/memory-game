@@ -45,7 +45,7 @@ class GameStore {
     if (this.flippedCards.length < 2 && !this.cardStates[index]) {
       this.cardStates[index] = true;
       this.flippedCards.push(index);
-
+  
       if (this.flippedCards.length === 2) {
         const [firstIndex, secondIndex] = this.flippedCards;
         if (this.cardValues[firstIndex] !== this.cardValues[secondIndex]) {
@@ -59,11 +59,11 @@ class GameStore {
           this.flippedCards = [];
           this.turns++;
           // Check if all cards are revealed
-          if (Object.values(this.cardStates).every(state => state === true)) {
-            this.stopTimer();
-            this.updateResults(true); // Game completed successfully
-            setTimeout(() => this.showResults(), 500); // Delay to allow fade-out effect
-          }
+          setTimeout(() => {
+            if (Object.keys(this.cardStates).length === this.cardValues.length && Object.values(this.cardStates).every(state => state === true)) {
+              this.handleGameCompletion();
+            }
+          }, 500); // Delay to ensure state updates
         }
       }
     }
@@ -119,7 +119,7 @@ class GameStore {
   endGame(success: boolean) {
     this.stopTimer();
     this.updateResults(success); // Pass the game status
-    this.view = 'results'; // Immediately show results view
+    setTimeout(() => this.transitionToResults(), 500); // Delay to allow fade-out effect
   }
 
   startTimer() {
@@ -152,6 +152,16 @@ class GameStore {
     if (this.results.length > 5) {
       this.results.pop(); // Remove the oldest entry if more than 5 results
     }
+  }
+
+  transitionToResults() {
+    this.view = 'results';
+  }
+
+  handleGameCompletion() {
+    this.stopTimer();
+    this.updateResults(true); // Game completed successfully
+    setTimeout(() => this.transitionToResults(), 500); // Delay to allow fade-out effect
   }
 
   showResults() {
